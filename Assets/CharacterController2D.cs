@@ -8,7 +8,9 @@ public class CharacterController2D : MonoBehaviour {
     Rigidbody2D rigidbody2D;
     [SerializeField] float speed = 2f; // this will show up in inspector
     Vector2 motionVector;
+    public Vector2 lastMotionvector;
     Animator animator;
+    public bool moving;
 
     void Start() {
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -16,11 +18,22 @@ public class CharacterController2D : MonoBehaviour {
     }
 
     private void Update() {
-        motionVector = new Vector2(
-            Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")
-            ); // getaxisraw return immediate value
-        animator.SetFloat("horizontal", Input.GetAxisRaw("Horizontal"));
-        animator.SetFloat("vertical", Input.GetAxisRaw("Vertical"));
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+
+        motionVector = new Vector2(horizontal, vertical); // getaxisraw return immediate value
+        animator.SetFloat("horizontal", horizontal);
+        animator.SetFloat("vertical", vertical);
+
+        moving = horizontal != 0 || vertical != 0;
+        animator.SetBool("moving", moving);
+
+        if (horizontal != 0 || vertical != 0) {
+            lastMotionvector = new Vector2(horizontal, vertical).normalized;
+
+            animator.SetFloat("lasthorizontal", horizontal);
+            animator.SetFloat("lastvertical", vertical);
+        }
     }
 
     void FixedUpdate() {
