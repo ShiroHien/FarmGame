@@ -12,7 +12,7 @@ public class CharacterController2D : MonoBehaviour {
     Animator animator;
     public bool moving;
 
-    void Start() {
+    void Awake() {
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -31,8 +31,8 @@ public class CharacterController2D : MonoBehaviour {
         if (horizontal != 0 || vertical != 0) {
             lastMotionvector = new Vector2(horizontal, vertical).normalized;
 
-            animator.SetFloat("lasthorizontal", horizontal);
-            animator.SetFloat("lastvertical", vertical);
+            animator.SetFloat("lastHorizontal", horizontal);
+            animator.SetFloat("lastVertical", vertical);
         }
     }
 
