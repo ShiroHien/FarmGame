@@ -14,7 +14,7 @@ public class ToolsCharacterController : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0)) { // left click
             UseTool();
         }
     }
