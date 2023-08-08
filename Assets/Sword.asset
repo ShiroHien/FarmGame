@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f85b0e3370d0f1438bd5943c84c5d6f, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
-  Name: 
-  stackable: 0
+  Name: Sword
+  stackable: 1
   icon: {fileID: 681248885, guid: 28327cc2bd0d75c43a74b517f038b77b, type: 3}
