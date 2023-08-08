@@ -7,7 +7,7 @@ public class InventoryController : MonoBehaviour
     [SerializeField] GameObject panel;
 
     private void Update() {
-        if (Input.GetKeyUp(KeyCode.I)) {
+        if (Input.GetKeyDown(KeyCode.I)) {
             panel.SetActive(!panel.activeInHierarchy);
         }
     }
