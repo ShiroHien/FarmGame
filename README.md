@@ -5,3 +5,5 @@ Source:
 	- https://opengameart.org/content/ui-pack-rpg-extension
 	- https://opengameart.org/content/496-pixel-art-icons-for-medievalfantasy-rpg
 	- https://opengameart.org/content/ui-pack-rpg-extension
+
+All thanks to @GregDevStuff!
