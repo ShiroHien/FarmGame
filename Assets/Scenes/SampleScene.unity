@@ -7848,6 +7848,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1862831231}
   - component: {fileID: 1862831230}
+  - component: {fileID: 1862831232}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -7869,6 +7870,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1018901427}
   inventoryContainer: {fileID: 11400000, guid: e041ff6132657b5438341f03354a3a0b, type: 2}
+  dragAndDropController: {fileID: 1862831232}
 --- !u!4 &1862831231
 Transform:
   m_ObjectHideFlags: 0
@@ -7884,6 +7886,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1862831232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862831229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a5a1e5309b8bb34298cde4184cb2b33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemSlot:
+    item: {fileID: 0}
+    count: 0
 --- !u!114 &1929709755 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7076871699191431569, guid: bcd2e71e2b40da140a0e354741a20593, type: 3}
@@ -8533,11 +8550,11 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1862831231}
   - {fileID: 519420032}
   - {fileID: 1018901430}
   - {fileID: 1340376247}
   - {fileID: 1406700652629797852}
-  - {fileID: 1862831231}
   - {fileID: 8394387438762082423}
   - {fileID: 299053447}
   - {fileID: 1809767263}
