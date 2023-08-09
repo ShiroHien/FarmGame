@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ItemDragAndDropController : MonoBehaviour
@@ -19,6 +20,12 @@ public class ItemDragAndDropController : MonoBehaviour
     private void Update() {
         if (itemIcon.activeInHierarchy == true) {
             iconTransform.position = Input.mousePosition;
+
+            if (Input.GetMouseButtonDown(0)) { //left-click
+                if (EventSystem.current.IsPointerOverGameObject() == false) {
+                    Debug.Log("We are clicking outside the panel");
+                }
+            }
         }
     }
 
