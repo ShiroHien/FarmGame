@@ -4054,7 +4054,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &509906403
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4088,7 +4088,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7925,6 +7925,7 @@ GameObject:
   - component: {fileID: 1862831231}
   - component: {fileID: 1862831230}
   - component: {fileID: 1862831232}
+  - component: {fileID: 1862831233}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -7977,6 +7978,20 @@ MonoBehaviour:
   itemSlot:
     item: {fileID: 0}
     count: 0
+  itemIcon: {fileID: 509906402}
+--- !u!114 &1862831233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862831229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f23d6c4b8dacef43a7da2dcd168aa7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickUpItemPrefab: {fileID: 2733039735489211172, guid: 452c13636471b4f4485e15fdff9e2b35, type: 3}
 --- !u!114 &1929709755 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7076871699191431569, guid: bcd2e71e2b40da140a0e354741a20593, type: 3}
@@ -8488,6 +8503,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3157869523046680087, guid: 3c849b31adb2c094485022624867c4c9, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: 5cfaf0521ac58e04883df688b311b26c, type: 2}
     - target: {fileID: 6392614212185456168, guid: 3c849b31adb2c094485022624867c4c9, type: 3}
       propertyPath: m_Name
       value: Tree0
