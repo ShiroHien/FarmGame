@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UI;
 
 public class InventoryButton : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] Image icon;
     [SerializeField] Text text;
+    [SerializeField] Image hightlight;
 
     int myIndex;
 
@@ -34,9 +36,13 @@ public class InventoryButton : MonoBehaviour, IPointerClickHandler
     }
 
     public void OnPointerClick(PointerEventData eventData) {
-        ItemContainer inventory = GameManager.instance.inventoryContainer;
-        GameManager.instance.dragAndDropController.OnClick(inventory.slots[myIndex]);
+        ItemPanel itemPanel = transform.parent.GetComponent<ItemPanel>();
+        itemPanel.OnClick(myIndex);
+    }
 
-        transform.parent.GetComponent<InventoryPanel>().Show();
+    
+
+    public void Hightlight(bool b) {
+        hightlight.gameObject.SetActive(b);
     }
 }
