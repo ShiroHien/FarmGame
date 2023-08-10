@@ -7,6 +7,7 @@ public class ToolbarController : MonoBehaviour
 {
     [SerializeField] int toolbarSize = 12;
     int selectedTool;
+    public Action<int> onChange;
 
     internal void Set(int id) {
         selectedTool = id;
@@ -23,8 +24,10 @@ public class ToolbarController : MonoBehaviour
                 selectedTool -= 1;
                 selectedTool = (selectedTool <= 0 ? toolbarSize - 1 : selectedTool);
             }
-            Debug.Log(selectedTool);
+            onChange?.Invoke(selectedTool);
         }
     }
+
+
 
 }

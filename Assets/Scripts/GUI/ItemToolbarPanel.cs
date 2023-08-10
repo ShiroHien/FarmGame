@@ -6,9 +6,15 @@ public class ItemToolbarPanel : ItemPanel
 {
     [SerializeField] ToolbarController toolbarController;
 
+    private void Start() {
+        Init();
+        toolbarController.onChange += HighLight;
+        HighLight(0);
+    }
+
     public override void OnClick(int id) {
         toolbarController.Set(id);
-        buttons[id].Hightlight(true);
+        HighLight(id);
     }
 
     int currentSelectedTool;
