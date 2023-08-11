@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -4071,7 +4071,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Outdoors Spring_188
+      name: Marker
       rect:
         serializedVersion: 2
         x: 112
@@ -7998,7 +7998,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Outdoors Spring_375
+      name: Grass
       rect:
         serializedVersion: 2
         x: 32
@@ -9594,7 +9594,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Outdoors Spring_451
+      name: PlowableDirt
       rect:
         serializedVersion: 2
         x: 96
@@ -11820,7 +11820,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Outdoors Spring_557
+      name: Land
       rect:
         serializedVersion: 2
         x: 192
@@ -39338,7 +39338,7 @@ TextureImporter:
         width: 48
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -39359,7 +39359,7 @@ TextureImporter:
         width: 47
         height: 90
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -39382,6 +39382,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Grass: -758425235
+      Land: -484189911
+      Marker: 1023139011
       Outdoors Spring_0: -1481983190
       Outdoors Spring_1: -73049513
       Outdoors Spring_10: -476628691
@@ -40350,7 +40353,6 @@ TextureImporter:
       Outdoors Spring_1867: 904835208
       Outdoors Spring_1868: -218211666
       Outdoors Spring_187: 864691276
-      Outdoors Spring_188: 1023139011
       Outdoors Spring_189: -206141155
       Outdoors Spring_19: 430704789
       Outdoors Spring_190: 1906543016
@@ -40558,7 +40560,6 @@ TextureImporter:
       Outdoors Spring_372: 864103627
       Outdoors Spring_373: -458619089
       Outdoors Spring_374: 29583518
-      Outdoors Spring_375: -758425235
       Outdoors Spring_376: 338473336
       Outdoors Spring_377: 2123613292
       Outdoors Spring_378: -1142629973
@@ -40643,7 +40644,6 @@ TextureImporter:
       Outdoors Spring_449: 826219512
       Outdoors Spring_45: -2110037329
       Outdoors Spring_450: 1077696275
-      Outdoors Spring_451: -1706530778
       Outdoors Spring_452: 1640918053
       Outdoors Spring_453: 372192646
       Outdoors Spring_454: -1922959906
@@ -40760,7 +40760,6 @@ TextureImporter:
       Outdoors Spring_554: 1962299282
       Outdoors Spring_555: 1073988451
       Outdoors Spring_556: -1979139877
-      Outdoors Spring_557: -484189911
       Outdoors Spring_558: 375073641
       Outdoors Spring_559: -219193516
       Outdoors Spring_56: 497318306
@@ -41251,6 +41250,7 @@ TextureImporter:
       Outdoors Spring_997: 1765600394
       Outdoors Spring_998: -107300449
       Outdoors Spring_999: 168610249
+      PlowableDirt: -1706530778
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
