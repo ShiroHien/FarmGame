@@ -12,6 +12,7 @@ public class ToolsCharacterController : MonoBehaviour {
     [SerializeField] MarkerManager markerManager;
     [SerializeField] TileMapReadController tileMapReadController;
     [SerializeField] float maxDistance = 1.5f;
+    [SerializeField] CropsManager cropsManager;
 
     Vector3Int selectedTilePosition;
     bool selectable;
@@ -26,7 +27,8 @@ public class ToolsCharacterController : MonoBehaviour {
         CanSelectCheck();
         Marker();
         if (Input.GetMouseButtonDown(0)) { // left click
-            UseTool();
+            UseToolWorld();
+            UseToolGrid();
         }
     }
 
@@ -45,7 +47,7 @@ public class ToolsCharacterController : MonoBehaviour {
         markerManager.markedCellPosition = selectedTilePosition;
     }
 
-    private void UseTool() {
+    private void UseToolWorld() {
         Vector2 position = rgbd2d.position + character.lastMotionvector * offsetDistance;
 
         Collider2D[] colliders = Physics2D.OverlapCircleAll(position, sizeOfInteractableArea);  // xu ly va cham voi vat co the pha huy
@@ -56,6 +58,12 @@ public class ToolsCharacterController : MonoBehaviour {
                 hit.Hit();
                 break;
             }
+        }
+    }
+
+    private void UseToolGrid() {
+        if (selectable == true) {
+            cropsManager.Plow(selectedTilePosition);
         }
     }
 }

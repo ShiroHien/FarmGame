@@ -12240,7 +12240,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Outdoors Spring_577
+      name: PlowedTile
       rect:
         serializedVersion: 2
         x: 112
@@ -13752,7 +13752,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Outdoors Spring_649
+      name: SeededTile
       rect:
         serializedVersion: 2
         x: 160
@@ -40781,7 +40781,6 @@ TextureImporter:
       Outdoors Spring_574: 1316100675
       Outdoors Spring_575: 816229824
       Outdoors Spring_576: 1228383292
-      Outdoors Spring_577: 1362404359
       Outdoors Spring_578: 1704922067
       Outdoors Spring_579: 1154430389
       Outdoors Spring_58: -1222508726
@@ -40861,7 +40860,6 @@ TextureImporter:
       Outdoors Spring_646: 1419558807
       Outdoors Spring_647: 2015642339
       Outdoors Spring_648: 1816514180
-      Outdoors Spring_649: 1070916238
       Outdoors Spring_65: -1589880544
       Outdoors Spring_650: -1485089226
       Outdoors Spring_651: 310582642
@@ -41251,6 +41249,8 @@ TextureImporter:
       Outdoors Spring_998: -107300449
       Outdoors Spring_999: 168610249
       PlowableDirt: -1706530778
+      PlowedTile: 1362404359
+      SeededTile: 1070916238
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
