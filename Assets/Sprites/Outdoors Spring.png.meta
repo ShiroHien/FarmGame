@@ -4074,8 +4074,8 @@ TextureImporter:
       name: Marker
       rect:
         serializedVersion: 2
-        x: 112
-        y: 1120
+        x: 160
+        y: 832
         width: 16
         height: 16
       alignment: 0

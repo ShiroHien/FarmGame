@@ -62,8 +62,14 @@ public class ToolsCharacterController : MonoBehaviour {
 
         animator.SetTrigger("act");
         bool complete = item.onAction.OnApply(position);
-        
-        return false;
+
+        if (complete == true) {
+            if (item.onItemUsed != null) {
+                item.onItemUsed.OnItemUsed(item, GameManager.instance.inventoryContainer);
+            }
+        }
+
+        return complete;
     }
 
     private void UseToolGrid() {
@@ -76,6 +82,12 @@ public class ToolsCharacterController : MonoBehaviour {
 
             animator.SetTrigger("act");
             bool complete = item.onTileMapAction.OnApplyToTileMap(selectedTilePosition, tileMapReadController);
+
+            if (complete == true) {
+                if (item.onItemUsed != null) {
+                    item.onItemUsed.OnItemUsed(item, GameManager.instance.inventoryContainer);
+                }
+            }
         }
     }
 }

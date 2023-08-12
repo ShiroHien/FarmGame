@@ -13,4 +13,8 @@ public class ToolAction : ScriptableObject
         Debug.LogWarning("OnApplyToTileMap is not implemented");
         return true;
     }
+
+    public virtual void OnItemUsed(Item usedItem, ItemContainer inventory) {
+
+    }
 }

@@ -25,8 +25,8 @@ MonoBehaviour:
     count: 1
   - item: {fileID: 11400000, guid: ae94c5c2b18a10a42b977caa36abbbef, type: 2}
     count: 1
-  - item: {fileID: 0}
-    count: 0
+  - item: {fileID: 11400000, guid: 65d1edc7d369d6f4399148e172dc0040, type: 2}
+    count: 100
   - item: {fileID: 0}
     count: 0
   - item: {fileID: 0}

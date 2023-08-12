@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Marker
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: 1023139011, guid: 1a16cd59db53a7048bf0ee12295601a5, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.6313726}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.49803922}
   m_Transform:
     e00: 1
     e01: 0

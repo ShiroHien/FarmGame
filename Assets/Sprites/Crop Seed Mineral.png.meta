@@ -206,6 +206,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Seed
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 288
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdacb0b9a8803f546b4708046482e1c0
+      internalID: -1481668930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -218,6 +239,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Ore: 1316778282
+      Seed: -1481668930
       Stone: -1165166499
       Sword: 681248885
       Wood: 1768745539
