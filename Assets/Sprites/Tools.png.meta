@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 28327cc2bd0d75c43a74b517f038b77b
+guid: 2c2b8034d8004464a86fb327b1e44005
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,64 +123,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Stone
+      name: Axe
       rect:
         serializedVersion: 2
-        x: 192
-        y: 592
+        x: 304
+        y: 209
         width: 16
-        height: 14
+        height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0984d072739455141a4a2218f0d543b0
-      internalID: -1165166499
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Wood
-      rect:
-        serializedVersion: 2
-        x: 97
-        y: 416
-        width: 15
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 78edd3e5593f14c478f5b1e6efb7839c
-      internalID: 1768745539
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Sword
-      rect:
-        serializedVersion: 2
-        x: 256
-        y: 128
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: db250c4be1b76d147aa94ae893c688c7
-      internalID: 681248885
+      spriteID: 45c4c847c7050ad45bf33ca0933bf281
+      internalID: 1022980912
       vertices: []
       indices: 
       edges: []
@@ -196,9 +154,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Stone: -1165166499
-      Sword: 681248885
-      Wood: 1768745539
+      Axe: 1022980912
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

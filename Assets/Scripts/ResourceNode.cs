@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TreeCuttable : Toolhit {
+public class ResourceNode : Toolhit {
     [SerializeField] GameObject pickUpDrop; 
 
     [SerializeField] Item item;

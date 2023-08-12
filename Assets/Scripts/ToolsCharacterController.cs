@@ -2,17 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityEngine.Timeline;
 
 public class ToolsCharacterController : MonoBehaviour {
+
     CharacterController2D character;
     Rigidbody2D rgbd2d;
+    ToolbarController toolbarController;
     [SerializeField] float offsetDistance = 1f;
     [SerializeField] float sizeOfInteractableArea = 1.2f;
     [SerializeField] MarkerManager markerManager;
     [SerializeField] TileMapReadController tileMapReadController;
     [SerializeField] float maxDistance = 1.5f;
     [SerializeField] CropsManager cropsManager;
+    [SerializeField] TileData plowableTiles;
 
     Vector3Int selectedTilePosition;
     bool selectable;
@@ -20,6 +24,7 @@ public class ToolsCharacterController : MonoBehaviour {
     private void Awake() {
         character = GetComponent<CharacterController2D>();
         rgbd2d = GetComponent<Rigidbody2D>();
+        toolbarController = GetComponent<ToolbarController>();
     }
 
     private void Update() {
@@ -27,7 +32,7 @@ public class ToolsCharacterController : MonoBehaviour {
         CanSelectCheck();
         Marker();
         if (Input.GetMouseButtonDown(0)) { // left click
-            UseToolWorld();
+            if (UseToolWorld() == true) { return; }
             UseToolGrid();
         }
     }
@@ -47,23 +52,33 @@ public class ToolsCharacterController : MonoBehaviour {
         markerManager.markedCellPosition = selectedTilePosition;
     }
 
-    private void UseToolWorld() {
+    private bool UseToolWorld() {
         Vector2 position = rgbd2d.position + character.lastMotionvector * offsetDistance;
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, sizeOfInteractableArea);  // xu ly va cham voi vat co the pha huy
+        Item item = toolbarController.GetItem;
 
-        foreach (Collider2D c in colliders) {
-            Toolhit hit = c.GetComponent<Toolhit>();
-            if (hit != null) {
-                hit.Hit();
-                break;
-            }
-        }
+        if(item == null) { return false; }
+        if (item.onAction == null) { return false; }
+
+        bool complete = item.onAction.OnApply(position);
+        
+        return false;
     }
 
     private void UseToolGrid() {
         if (selectable == true) {
-            cropsManager.Plow(selectedTilePosition);
+
+            TileBase tileBase = tileMapReadController.GetTileBase(selectedTilePosition);
+            TileData tileData = tileMapReadController.GetTileData(tileBase);
+
+            if (tileData != plowableTiles) { return; }
+
+            if (cropsManager.Check(selectedTilePosition)) {
+                cropsManager.Seed(selectedTilePosition);
+            }
+            else {
+                cropsManager.Plow(selectedTilePosition);
+            }
         }
     }
 }

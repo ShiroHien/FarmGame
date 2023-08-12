@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.8125, y: 0.5437, z: 0}
-  m_LocalScale: {x: 0.419862, y: 0.389354, z: 0.58}
+  m_LocalScale: {x: 0.9, y: 0.83460414, z: 1.2432655}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -144,5 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickUpDrop: {fileID: 2733039735489211172, guid: 452c13636471b4f4485e15fdff9e2b35, type: 3}
+  item: {fileID: 11400000, guid: 5cfaf0521ac58e04883df688b311b26c, type: 2}
   dropCount: 15
+  itemCountInOneDrop: 1
   spread: 0.7
