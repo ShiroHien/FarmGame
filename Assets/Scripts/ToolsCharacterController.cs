@@ -10,6 +10,7 @@ public class ToolsCharacterController : MonoBehaviour {
     CharacterController2D character;
     Rigidbody2D rgbd2d;
     ToolbarController toolbarController;
+    Animator animator;
     [SerializeField] float offsetDistance = 1f;
     [SerializeField] float sizeOfInteractableArea = 1.2f;
     [SerializeField] MarkerManager markerManager;
@@ -25,6 +26,7 @@ public class ToolsCharacterController : MonoBehaviour {
         character = GetComponent<CharacterController2D>();
         rgbd2d = GetComponent<Rigidbody2D>();
         toolbarController = GetComponent<ToolbarController>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update() {
@@ -60,6 +62,7 @@ public class ToolsCharacterController : MonoBehaviour {
         if(item == null) { return false; }
         if (item.onAction == null) { return false; }
 
+        animator.SetTrigger("act");
         bool complete = item.onAction.OnApply(position);
         
         return false;

@@ -6,4 +6,8 @@ public class Toolhit : MonoBehaviour {
     public virtual void Hit() {
 
     }
+
+    public virtual bool CanBeHit(List<ResourceNodeType> canBeHit) {
+        return true;    
+    }
 }
