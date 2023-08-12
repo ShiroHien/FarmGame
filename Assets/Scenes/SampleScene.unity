@@ -3962,7 +3962,7 @@ RectTransform:
   m_GameObject: {fileID: 660630102}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.11, y: 2.11, z: 2.11}
+  m_LocalScale: {x: 1.6899999, y: 1.6899999, z: 1.6899999}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 551579178}
@@ -5279,8 +5279,6 @@ MonoBehaviour:
   markerManager: {fileID: 2103106343}
   tileMapReadController: {fileID: 1862831234}
   maxDistance: 1.5
-  cropsManager: {fileID: 1862831235}
-  plowableTiles: {fileID: 11400000, guid: 2916afcd4de2666488cb46746ff9a905, type: 2}
 --- !u!114 &1018901435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8495,6 +8493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 481753317}
+  cropsManager: {fileID: 0}
   tileDatas:
   - {fileID: 11400000, guid: 79a8cbe7727d3984ab6e0742be54fea8, type: 2}
   - {fileID: 11400000, guid: 2916afcd4de2666488cb46746ff9a905, type: 2}
