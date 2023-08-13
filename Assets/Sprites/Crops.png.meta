@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 28327cc2bd0d75c43a74b517f038b77b
+guid: 27646773f35d4ef459f30e1417e65e48
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,106 +123,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Stone
+      name: Crops_0
       rect:
         serializedVersion: 2
-        x: 192
-        y: 592
-        width: 16
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 179
+        y: 612
+        width: 10
+        height: 13
+      alignment: 9
+      pivot: {x: -1, y: -1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0984d072739455141a4a2218f0d543b0
-      internalID: -1165166499
+      spriteID: 2adc2dee43a612b4a952bdda7091a5ef
+      internalID: -1758018757
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wood
+      name: Crops_1
       rect:
         serializedVersion: 2
-        x: 97
-        y: 416
+        x: 193
+        y: 612
         width: 15
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 19
+      alignment: 9
+      pivot: {x: -0.5, y: -0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 78edd3e5593f14c478f5b1e6efb7839c
-      internalID: 1768745539
+      spriteID: 6e024c36b02f0c54b854f11632255ec7
+      internalID: -316658111
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Sword
+      name: Crops_2
       rect:
         serializedVersion: 2
-        x: 256
-        y: 128
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: db250c4be1b76d147aa94ae893c688c7
-      internalID: 681248885
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ore
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 592
-        width: 16
-        height: 14
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 581d48cbae2ab5a458ee6906886eada5
-      internalID: 1316778282
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Seed
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 336
+        x: 209
+        y: 612
         width: 15
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 23
+      alignment: 9
+      pivot: {x: -0.5, y: -0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cdacb0b9a8803f546b4708046482e1c0
-      internalID: -1481668930
+      spriteID: f57e63c850568864bba0076c3d27b0fb
+      internalID: -690848782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Crops_3
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 612
+        width: 15
+        height: 23
+      alignment: 9
+      pivot: {x: -0.5, y: -0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea95a6d60dc57304f80ba81db2865bd8
+      internalID: 265209446
       vertices: []
       indices: 
       edges: []
@@ -238,11 +217,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ore: 1316778282
-      Seed: -1481668930
-      Stone: -1165166499
-      Sword: 681248885
-      Wood: 1768745539
+      Crops_0: -1758018757
+      Crops_1: -316658111
+      Crops_2: -690848782
+      Crops_3: 265209446
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
