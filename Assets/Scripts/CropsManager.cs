@@ -9,6 +9,20 @@ public class CropTile {
     public int growStage;
     public Crop crop;
     public SpriteRenderer renderer;
+
+    public bool Complete {
+        get {
+            if (crop == null) {  return false; }    
+            return growTimer >= crop.timeToGrow;
+        }
+    }
+
+    internal void Harvest() {
+        growTimer = 0;
+        growStage = 0;
+        crop = null;
+        renderer.gameObject.SetActive(false);
+    }
 }
 
 public class CropsManager : TimeAgent
@@ -30,6 +44,11 @@ public class CropsManager : TimeAgent
         foreach (CropTile cropTile in crops.Values) {
             if (cropTile == null) { continue; }
 
+            if (cropTile.Complete) {
+                Debug.Log("done growing");
+                continue;
+            }
+
             cropTile.growTimer += 1;
 
             if (cropTile.growTimer >= cropTile.crop.growthStageTime[cropTile.growStage]) {
@@ -40,10 +59,6 @@ public class CropsManager : TimeAgent
                 cropTile.growStage += 1;
             }
 
-            if (cropTile.growTimer >= cropTile.crop.timeToGrow) {
-                Debug.Log("done growing");
-                cropTile.crop = null;
-            }
         }
     }
 
@@ -76,5 +91,23 @@ public class CropsManager : TimeAgent
         crop.renderer =  go.GetComponent<SpriteRenderer>();
 
         targetTilemap.SetTile(position, plowed);
+    }
+
+    internal void PickUp(Vector3Int gridPosition) {
+        Vector2Int position = (Vector2Int)gridPosition;
+        if (crops.ContainsKey(position) == false) {
+            return;
+        }
+
+        CropTile cropTile = crops[position];
+
+        if (cropTile.Complete) {
+            ItemSpawnManager.instance.SpawnItem(
+                targetTilemap.CellToWorld(gridPosition),
+                cropTile.crop.yield,
+                cropTile.crop.count
+                );
+            cropTile.Harvest();
+        }
     }
 }
