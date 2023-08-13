@@ -652,7 +652,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &299053446
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5148,7 +5148,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -16537922, guid: 4442fcbbf0b1543479ec24de73e207c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5249,7 +5249,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.3}
+  m_Offset: {x: 0, y: -0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5260,7 +5260,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.40625, y: 0.39}
+  m_Size: {x: 0.40625, y: 0.87}
   m_EdgeRadius: 0
 --- !u!114 &1018901434
 MonoBehaviour:
@@ -7122,6 +7122,10 @@ PrefabInstance:
       propertyPath: item
       value: 
       objectReference: {fileID: 11400000, guid: 5cfaf0521ac58e04883df688b311b26c, type: 2}
+    - target: {fileID: 3630577801236269498, guid: 3c849b31adb2c094485022624867c4c9, type: 3}
+      propertyPath: probability
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 6392614212185456168, guid: 3c849b31adb2c094485022624867c4c9, type: 3}
       propertyPath: m_Name
       value: Tree (1)
@@ -8517,6 +8521,7 @@ MonoBehaviour:
   player: {fileID: 1018901427}
   inventoryContainer: {fileID: 11400000, guid: e041ff6132657b5438341f03354a3a0b, type: 2}
   dragAndDropController: {fileID: 1862831232}
+  timeController: {fileID: 1862831236}
 --- !u!4 &1862831231
 Transform:
   m_ObjectHideFlags: 0
@@ -8665,6 +8670,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   dayLightColor: {r: 1, g: 1, b: 1, a: 1}
   timeScale: 6000
+  startAtTime: 28800
   text: {fileID: 1776107507}
   globalLight: {fileID: 1879772870}
 --- !u!1001 &1865631189

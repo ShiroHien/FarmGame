@@ -10,7 +10,7 @@ public class CropTile {
     public Crop crop;
 }
 
-public class CropsManager : MonoBehaviour
+public class CropsManager : TimeAgent
 {
     [SerializeField] TileBase plowed;
     [SerializeField] TileBase seeded;
@@ -20,6 +20,12 @@ public class CropsManager : MonoBehaviour
 
     private void Start() {
         crops = new Dictionary<Vector2Int, CropTile>();
+        onTimeTick += Tick;
+        Init();
+    }
+
+    public void Tick() {
+
     }
 
     public bool Check(Vector3Int position) {
