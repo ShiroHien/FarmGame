@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Experimental.Rendering.Universal;
+
 
 public class DayTimeController : MonoBehaviour
 {
@@ -60,7 +60,7 @@ public class DayTimeController : MonoBehaviour
         time += Time.deltaTime * TimeScale;
         int hours = (int)getHours;
         TimeDisplay.text = hours.ToString("00") + ":00";
-        Light2D light = transform.GetComponent<Light2D>();
+        UnityEngine.Rendering.Universal.Light2D light = transform.GetComponent<UnityEngine.Rendering.Universal.Light2D>();
 
         if (time > 25200f && time < 72000f) {
             light.intensity = 1f;
