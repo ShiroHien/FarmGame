@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -13,14 +12,18 @@ public class MarkerManager : MonoBehaviour
     bool show;
 
     private void Update() {
-        if (show == false) { return; }
+        if (Time.timeScale == 0)
+            return;
 
+        if (show == false) {
+            return;
+        }
         targetTilemap.SetTile(oldCellPosition, null);
         targetTilemap.SetTile(markedCellPosition, tile);
         oldCellPosition = markedCellPosition;
     }
 
-    internal void Show(bool selectable) {
+    public void Show(bool selectable) {
         show = selectable;
         targetTilemap.gameObject.SetActive(show);
     }

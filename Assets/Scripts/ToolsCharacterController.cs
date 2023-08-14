@@ -1,48 +1,145 @@
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.Timeline;
+using UnityEngine.EventSystems;
 
-public class ToolsCharacterController : MonoBehaviour {
-
-    CharacterController2D character;
+public class ToolsCharacterController : MonoBehaviour
+{
+    PlayerControl character;
     Rigidbody2D rgbd2d;
-    ToolbarController toolbarController;
-    Animator animator;
-    [SerializeField] float offsetDistance = 1f;
-    [SerializeField] float sizeOfInteractableArea = 1.2f;
     [SerializeField] MarkerManager markerManager;
     [SerializeField] TileMapReadController tileMapReadController;
-    [SerializeField] float maxDistance = 1.5f;
-    [SerializeField] ToolAction onTilePickUp;
+    [SerializeField] CropsReadController cropsReadController;
+    [SerializeField] float maxDistance = 2f;
+    [SerializeField] CropsManager cropsManager;
+    [SerializeField] TileData plowableTiles;
+    [SerializeField] TileData toMowTiles;
+    [SerializeField] TileData toSeedTiles;
+    [SerializeField] TileData waterableTiles;
+    InventoryController inventoryController;
+    ToolbarController toolbarController;
+    [SerializeField] GameObject toolbarPanel;
+
+    [SerializeField] float offsetDistance = 1f;
+    [SerializeField] float sizeOfInteractableArea = 1.2f;
+
+    private static int cornPickUpCount = 3;
+    private static int parsleyPickUpCount = 1;
+    private static int potatoPickUpCount = 1;
+    private static int strawberryPickUpCount = 1;
+    private static int tomatoPickUpCount = 1;
+
+    private static int cornSeedsCount = 4;
+    private static int parsleySeedsCount = 3;
+    private static int potatoSeedsCount = 1;
+    private static int strawberrySeedsCount = 6;
+    private static int tomatoSeedsCount = 3;
 
     Vector3Int selectedTilePosition;
+    Vector3Int selectedCropPosition;
     bool selectable;
 
-    private void Awake() {
-        character = GetComponent<CharacterController2D>();
+    public static Dictionary<Vector2Int, TileData> fields;
+    public static Dictionary<Vector2Int, CropData> crops;
+
+    UI_ShopController shopPanel;
+
+    void Start() {
+        character = GetComponent<PlayerControl>();
         rgbd2d = GetComponent<Rigidbody2D>();
+        fields = new Dictionary<Vector2Int, TileData>();
+        crops = new Dictionary<Vector2Int, CropData>();
         toolbarController = GetComponent<ToolbarController>();
-        animator = GetComponent<Animator>();
+        inventoryController = GetComponent<InventoryController>();
+
+        var shopPanelAll = Resources.FindObjectsOfTypeAll<UI_ShopController>();
+        shopPanel = shopPanelAll[0];
     }
 
-    private void Update() {
+    void Update() {
         SelectTile();
         CanSelectCheck();
         Marker();
-        if (Input.GetMouseButtonDown(0)) { // left click
-            if (UseToolWorld() == true) { return; }
-            UseToolGrid();
+        if (Input.GetMouseButtonDown(0)) { 
+            if (!inventoryController.isOpen) {
+                if (UseToolWorld() == true) {
+                    return;
+                }
+                UseTool();
+            }
+
         }
     }
 
+    private bool CastRay() { 
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
+        if (hit) {
+            if (hit.collider.gameObject.name.Contains("Tree")) {
+                return true;
+            }
+            if (hit.collider.gameObject.name.Contains("CampFire")) {
+                return true;
+            }
+            if (hit.collider.gameObject.name.Contains("Chest")) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private bool CastRayPlayer() {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity);
+        if (hit) {
+            if (hit.collider.gameObject.name.Contains("Player")) {
+                return true;
+            }
+        }
+        return false;
+    }
     private void SelectTile() {
         selectedTilePosition = tileMapReadController.GetGridPosition(Input.mousePosition, true);
+        TileBase tileBase = tileMapReadController.GetTileBase(selectedTilePosition);
+        try {
+            TileData tileData = tileMapReadController.GetTileData(tileBase);
+            if (!(tileData is null)) {
+                if (!fields.ContainsKey((Vector2Int)selectedTilePosition)) {
+                    fields.Add((Vector2Int)selectedTilePosition, tileData);
+                }
+                else {
+                    fields[(Vector2Int)selectedTilePosition] = tileData;
+                }
+            }
+        }
+        catch {
+            return;
+        }
+
+        selectedCropPosition = cropsReadController.GetGridPosition(Input.mousePosition, true);
+        TileBase cropBase = cropsReadController.GetTileBase(selectedTilePosition);
+        try {
+            CropData cropData = cropsReadController.GetCropData(cropBase);
+            if (!(cropData is null)) {
+                if (!crops.ContainsKey((Vector2Int)selectedTilePosition)) {
+                    crops.Add((Vector2Int)selectedTilePosition, cropData);
+                }
+                else {
+                    crops[(Vector2Int)selectedTilePosition] = cropData;
+                }
+            }
+        }
+        catch
+        {
+            return;
+        }
+
     }
 
     void CanSelectCheck() {
+        if (Time.timeScale == 0)
+            return;
+
         Vector2 characterPosition = transform.position;
         Vector2 cameraPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         selectable = Vector2.Distance(characterPosition, cameraPosition) < maxDistance;
@@ -54,50 +151,200 @@ public class ToolsCharacterController : MonoBehaviour {
     }
 
     private bool UseToolWorld() {
-        Vector2 position = rgbd2d.position + character.lastMotionvector * offsetDistance;
+        if (Time.timeScale == 0)
+            return false;
+        Vector2 position = rgbd2d.position + character.lastMotionVector * offsetDistance;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(position, sizeOfInteractableArea);
 
-        Item item = toolbarController.GetItem;
 
-        if(item == null) { return false; }
-        if (item.onAction == null) { return false; }
+        foreach (Collider2D collidor in colliders) {
+            ToolHit hitTree = collidor.GetComponent<ToolHit>();
+            CampFireHit hitFire = collidor.GetComponent<CampFireHit>();
+            ChestHit hitChest = collidor.GetComponent<ChestHit>();
+            PlayerHit hitPlayer = collidor.GetComponent<PlayerHit>();
 
-        animator.SetTrigger("act");
-        bool complete = item.onAction.OnApply(position);
-
-        if (complete == true) {
-            if (item.onItemUsed != null) {
-                item.onItemUsed.OnItemUsed(item, GameManager.instance.inventoryContainer);
+            if (hitTree != null && toolbarController.GetItem != null &&
+                toolbarController.GetItem.Name == "Axe" && CastRay() == true)
+            {
+                hitTree.Hit();
+                return true;
+            }
+            if (hitFire != null && toolbarController.GetItem != null &&
+                toolbarController.GetItem.Name == "Wood" && CastRay() == true)
+            {
+                hitFire.Hit();
+                return true;
+            }
+            if (hitChest != null && CastRay() == true)
+            {
+                hitChest.Hit();
+                return true;
+            }
+            if (hitPlayer != null && toolbarController.GetItem != null && CastRayPlayer() == true && (toolbarController.GetItem.Name == "Food_Corn" || toolbarController.GetItem.Name == "Food_Parsley"
+                    || toolbarController.GetItem.Name == "Food_Potato" || toolbarController.GetItem.Name == "Food_Strawberry" || toolbarController.GetItem.Name == "Food_Tomato"))
+            {
+                hitPlayer.Hit();
+                return true;
             }
         }
 
-        return complete;
+        return false;
     }
 
-    private void UseToolGrid() {
-        if (selectable == true) {
+    private void RefreshToolbar()
+    {
+        toolbarPanel.SetActive(!toolbarPanel.activeInHierarchy);
+        toolbarPanel.SetActive(true);
+    }
 
-            Item item = toolbarController.GetItem;
-            if (item == null) {
-                PickUpTile();
-                return; 
+    private void UseTool()
+    {
+        if (Time.timeScale == 0)
+            return;
+
+        if (selectable == true && toolbarController.GetItem != null)
+        {
+            TileBase tileBase = tileMapReadController.GetTileBase(selectedTilePosition);
+            TileData tileData = tileMapReadController.GetTileData(tileBase);
+
+            if (tileData != plowableTiles && tileData != toMowTiles && tileData != toSeedTiles && tileData != waterableTiles)
+            {
+                return;
+            }
+            if (crops[(Vector2Int)selectedTilePosition].noPlant)
+            {
+                if (fields[(Vector2Int)selectedTilePosition].ableToMow && toolbarController.GetItem.Name == "Shovel" 
+                    && shopPanel.isOpen == false)
+                {
+                    cropsManager.Mow(selectedTilePosition);
+                }
+                else if (fields[(Vector2Int)selectedTilePosition].plowable && toolbarController.GetItem.Name == "Hoe")
+                {
+                    cropsManager.Plow(selectedTilePosition);
+                }
+                else if (fields[(Vector2Int)selectedTilePosition].ableToSeed && toolbarController.GetItem.isSeed == true)
+                {
+                    switch (toolbarController.GetItem.Name)
+                    {
+                        case "Seeds_Corn":
+                            if (GameManager.instance.inventoryContainer.slots[toolbarController.selectedTool].count 
+                                >= cornSeedsCount)
+                            {
+                                cropsManager.SeedCrop(selectedTilePosition, "corn");
+                                GameManager.instance.inventoryContainer.RemoveItem(toolbarController.GetItem, cornSeedsCount);
+                            }
+                        break;
+                        case "Seeds_Parsley":
+                            if (GameManager.instance.inventoryContainer.slots[toolbarController.selectedTool].count 
+                                >= parsleySeedsCount)
+                            {
+                                cropsManager.SeedCrop(selectedTilePosition, "parsley");
+                                GameManager.instance.inventoryContainer.RemoveItem(toolbarController.GetItem, parsleySeedsCount);
+                            }
+                        break;
+                        case "Seeds_Potato":
+                            if (GameManager.instance.inventoryContainer.slots[toolbarController.selectedTool].count 
+                                >= potatoSeedsCount)
+                            {
+                                cropsManager.SeedCrop(selectedTilePosition, "potato");
+                                GameManager.instance.inventoryContainer.RemoveItem(toolbarController.GetItem, potatoSeedsCount);
+                            }
+                        break;
+                        case "Seeds_Strawberry":
+                            if (GameManager.instance.inventoryContainer.slots[toolbarController.selectedTool].count 
+                                >= strawberrySeedsCount)
+                            {
+                                cropsManager.SeedCrop(selectedTilePosition, "strawberry");
+                                GameManager.instance.inventoryContainer.RemoveItem(toolbarController.GetItem, strawberrySeedsCount);
+                            }
+                        break;
+                        case "Seeds_Tomato":
+                            if (GameManager.instance.inventoryContainer.slots[toolbarController.selectedTool].count 
+                                >= tomatoSeedsCount)
+                            {
+                                cropsManager.SeedCrop(selectedTilePosition, "tomato");
+                                GameManager.instance.inventoryContainer.RemoveItem(toolbarController.GetItem, tomatoSeedsCount); 
+                            }
+                        break;
+                    }
+
+                    RefreshToolbar();
+                }               
             }
 
-            if (item.onTileMapAction == null) { return; }
+            else if (crops[(Vector2Int)selectedTilePosition].planted && fields[(Vector2Int)selectedTilePosition].waterable && toolbarController.GetItem.Name == "WateringCan")
+            {
+                cropsManager.Water(selectedTilePosition);
+                FindObjectOfType<SoundManager>().Play("Water");
+            }
 
-            animator.SetTrigger("act");
-            bool complete = item.onTileMapAction.OnApplyToTileMap(selectedTilePosition, tileMapReadController, item);
+            else if (crops[(Vector2Int)selectedTilePosition].collectibleCorn && toolbarController.GetItem.Name == "Bag")
+            {
+                cropsManager.Collect(selectedTilePosition, "corn");
+                foreach (ItemSlot itemSlot in GameManager.instance.allItemsContainer.slots)
+                {
+                    if (itemSlot.item.Name == "Food_Corn")
+                    {
+                        GameManager.instance.inventoryContainer.Add(itemSlot.item, cornPickUpCount);
+                        RefreshToolbar();
+                        break;
+                    }
+                }
 
-            if (complete == true) {
-                if (item.onItemUsed != null) {
-                    item.onItemUsed.OnItemUsed(item, GameManager.instance.inventoryContainer);
+            }
+            else if (crops[(Vector2Int)selectedTilePosition].collectibleParsley && toolbarController.GetItem.Name == "Bag")
+            {
+                cropsManager.Collect(selectedTilePosition, "parsley");
+                foreach (ItemSlot itemSlot in GameManager.instance.allItemsContainer.slots)
+                {
+                    if (itemSlot.item.Name == "Food_Parsley")
+                    {
+                        GameManager.instance.inventoryContainer.Add(itemSlot.item, parsleyPickUpCount);
+                        RefreshToolbar();
+                        break;
+                    }
                 }
             }
+            else if (crops[(Vector2Int)selectedTilePosition].collectiblePotato && toolbarController.GetItem.Name == "Bag")
+            {
+                cropsManager.Collect(selectedTilePosition, "potato");
+                foreach (ItemSlot itemSlot in GameManager.instance.allItemsContainer.slots)
+                {
+                    if (itemSlot.item.Name == "Food_Potato")
+                    {
+                        GameManager.instance.inventoryContainer.Add(itemSlot.item, potatoPickUpCount);
+                        RefreshToolbar();
+                        break;
+                    }
+                }
+            }
+            else if (crops[(Vector2Int)selectedTilePosition].collectibleStrawberry && toolbarController.GetItem.Name == "Bag")
+            {
+                cropsManager.Collect(selectedTilePosition, "strawberry");
+                foreach (ItemSlot itemSlot in GameManager.instance.allItemsContainer.slots)
+                {
+                    if (itemSlot.item.Name == "Food_Strawberry")
+                    {
+                        GameManager.instance.inventoryContainer.Add(itemSlot.item, strawberryPickUpCount);
+                        RefreshToolbar();
+                        break;
+                    }
+                }
+            }
+            else if (crops[(Vector2Int)selectedTilePosition].collectibleTomato && toolbarController.GetItem.Name == "Bag")
+            {
+                cropsManager.Collect(selectedTilePosition, "tomato");
+                foreach (ItemSlot itemSlot in GameManager.instance.allItemsContainer.slots)
+                {
+                    if (itemSlot.item.Name == "Food_Tomato")
+                    {
+                        GameManager.instance.inventoryContainer.Add(itemSlot.item, tomatoPickUpCount);
+                        RefreshToolbar();
+                        break;
+                    }
+                }
+            }
+
         }
-    }
-
-    private void PickUpTile() {
-        if (onTilePickUp == null) {  return ; }
-
-        onTilePickUp.OnApplyToTileMap(selectedTilePosition, tileMapReadController, null);
     }
 }

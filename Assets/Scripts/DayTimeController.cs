@@ -1,92 +1,104 @@
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class DayTimeController : MonoBehaviour
 {
-    const float secondsInDay = 86400f;
-    const float phaseLength = 900f; 
-
-    [SerializeField] Color nightLightColor;
-    [SerializeField] AnimationCurve nightTimeCurve;
-    [SerializeField] Color dayLightColor = Color.white;
-
-    float time;
-    [SerializeField] float timeScale = 60f;
-    [SerializeField] float startAtTime = 28800f;
-
-    [SerializeField] Text text;
-    [SerializeField] Light2D globalLight;
-    private int days;
-
-    List<TimeAgent> agents;
-
-    private void Awake() {
-        agents = new List<TimeAgent>();
-    }
+    const float SecondsInDay = 86400f;
+    public float time;
+    [SerializeField] Text TimeDisplay;
+    [SerializeField] float TimeScale;
+    [SerializeField] float LightTransition = 0.0001f;
+    public int hungerUpdaterCounter;
+    public int healthUpdaterCounter;
+    public int temperatureUpdateCounter;
+    public int day;
 
     private void Start() {
-        time = startAtTime;
+        day = 0;
+        time = 25200f;
+        hungerUpdaterCounter = 0;
+        healthUpdaterCounter = 0;
+        temperatureUpdateCounter = 0;
+        TemperatureController.currentTemperature = 100;
+    }
+    private float getHours {
+        get { return time / 3600f; }
     }
 
-    public void Subscribe(TimeAgent timeAgent) {
-        agents.Add(timeAgent);
+    public float GetTime {
+        get { return time; }
     }
 
-    public void Unsubscribe(TimeAgent timeAgent) {
-        agents.Remove(timeAgent);
-    }
 
-    float Hours {
-        get { return time / 3600f;  }
-    }
+    void Update() {
+        if (Time.timeScale == 0)
+            return;
 
-    float Minutes {
-        get { return time % 3600f / 60f;  }
-    }
+        hungerUpdaterCounter += 1;
+        temperatureUpdateCounter += 1;
 
-    private void Update() {
-        time += Time.deltaTime * timeScale;
-
-        TimeValueCalculation();
-        DayLight();
-
-        if (time > secondsInDay) {
-            NextDay();
+        if (hungerUpdaterCounter == 250)
+        {
+            HungerController.currentHunger -= 1;
+            hungerUpdaterCounter = 0;
         }
 
-        TimeAgents();
-    }
+        if(HungerController.currentHunger < 10 || TemperatureController.currentTemperature < 10)
+        {
+            healthUpdaterCounter += 1;
 
-    int oldPhase = 0;
-    private void TimeAgents() {
-        int currentPhase = (int)(time / phaseLength);
-        if (oldPhase != currentPhase) {
-            oldPhase = currentPhase;
-
-            for (int i = 0; i < agents.Count; i++) {
-                agents[i].Invoke();
+            if (healthUpdaterCounter == 100)
+            {
+                HealthController.currentHealth -= 1;
+                healthUpdaterCounter = 0;
             }
         }
+        
+        time += Time.deltaTime * TimeScale;
+        int hours = (int)getHours;
+        TimeDisplay.text = hours.ToString("00") + ":00";
+        Light2D light = transform.GetComponent<Light2D>();
+
+        if (time > 25200f && time < 72000f) {
+            light.intensity = 1f;
+            TemperatureController.currentTemperature = 100;
+        }
+
+        if ((time > 72000f && time < 86400f) || ((time > 0f && time < 18000f))) {
+            if (light.intensity > 0.3f) {
+                light.intensity -= LightTransition;
+            }
+            if (temperatureUpdateCounter > 50) {
+                TemperatureController.currentTemperature -= 1;
+                temperatureUpdateCounter = 0;
+            }
+        }
+        
+        if (time > 18000f && time < 25200f) {
+            if (light.intensity < 1f)
+                light.intensity += LightTransition;
+            if (temperatureUpdateCounter > 50) {
+                TemperatureController.currentTemperature -= 1;
+                temperatureUpdateCounter = 0;
+            }
+        }
+
+        if (time > SecondsInDay) {
+            time = 0;
+            day += 1;
+            MoneyController.money += 200;
+        }
+
+        if(HealthController.currentHealth < 1) {
+            Application.LoadLevel(3);
+        }
+
+        if(day == 9 && time > 25200f) {
+            Application.LoadLevel(4);
+        }
     }
 
-    private void DayLight() {
-        float v = nightTimeCurve.Evaluate(Hours);
-        Color c = Color.Lerp(dayLightColor, nightLightColor, v);
-        globalLight.color = c;
-    }
-
-    private void TimeValueCalculation() {
-        int hh = (int)Hours;
-        int mm = (int)Minutes;
-        text.text = hh.ToString("00") + ":" + Minutes.ToString("00");
-    }
-
-    private void NextDay() {
-        time = 0;
-        days += 1;
-    }
 }

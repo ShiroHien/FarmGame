@@ -1,133 +1,251 @@
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
 
-public class CropTile {
-    public int growTimer;
-    public int growStage;
-    public Crop crop;
-    public SpriteRenderer renderer;
-    public float wither;
-    public Vector3Int position;
-
-    public bool Complete {
-        get {
-            if (crop == null) {  return false; }    
-            return growTimer >= crop.timeToGrow;
-        }
-    }
-
-    internal void Harvest() {
-        growTimer = 0;
-        growStage = 0;
-        crop = null;
-        renderer.gameObject.SetActive(false);
-        wither = 0;
-    }
-}
-
-public class CropsManager : TimeAgent
+public class CropsManager : MonoBehaviour
 {
+    [SerializeField] TileBase grass;
     [SerializeField] TileBase plowed;
-    [SerializeField] TileBase seeded;
-    [SerializeField] Tilemap targetTilemap;
-    [SerializeField] GameObject cropsSpritePrefab;
+    [SerializeField] TileBase mowed;
+    [SerializeField] TileBase toWater;
+    [SerializeField] TileBase watered;
+    [SerializeField] TileBase invisible;
+    [SerializeField] Tilemap groundTilemap;
+    [SerializeField] Tilemap cropTilemap;
+    ToolbarController toolbarController;
 
-    Dictionary<Vector2Int, CropTile> crops;
+    Dictionary<Vector2Int, TileData> fields = new Dictionary<Vector2Int, TileData>();
+
+    public Dictionary<Vector3Int, Crop> crops;
+
+    public Dictionary<Vector3Int, Crop> corns;
+    Crop corn;
+    public Dictionary<Vector3Int, Crop> parsleys;
+    Crop parsley;
+    public Dictionary<Vector3Int, Crop> potatoes;
+    Crop potato;
+    public Dictionary<Vector3Int, Crop> strawberries;
+    Crop strawberry;
+    public Dictionary<Vector3Int, Crop> tomatoes;
+    Crop tomato;
+
+    private void Awake() {
+        corn = ScriptableObject.CreateInstance<Crop>();
+        parsley = ScriptableObject.CreateInstance<Crop>();
+        potato = ScriptableObject.CreateInstance<Crop>();
+        strawberry = ScriptableObject.CreateInstance<Crop>();
+        tomato = ScriptableObject.CreateInstance<Crop>();
+
+    }
 
     private void Start() {
-        crops = new Dictionary<Vector2Int, CropTile>();
-        onTimeTick += Tick;
-        Init();
-    }
-
-    public void Tick() {
-        foreach (CropTile cropTile in crops.Values) {
-            if (cropTile == null) { continue; }
-
-            cropTile.wither += 0.02f;
-
-            if (cropTile.wither > 1f) {
-                cropTile.Harvest();
-                targetTilemap.SetTile(cropTile.position, plowed);
-                continue;
+        foreach (SeedSlot itemSlot in GameManager.instance.allSeedsContainer.slots) {
+            if (itemSlot.item.Name == "corn") {
+                corn = itemSlot.item;
             }
-
-            if (cropTile.Complete) {
-                Debug.Log("done growing");
-                continue;
+            else if (itemSlot.item.Name == "parsley") {
+                parsley = itemSlot.item;
             }
-
-            cropTile.growTimer += 1;
-
-            if (cropTile.growTimer >= cropTile.crop.growthStageTime[cropTile.growStage]) {
-
-                cropTile.renderer.gameObject.SetActive(true);
-                cropTile.renderer.sprite = cropTile.crop.sprites[cropTile.growStage];
-
-                if (cropTile.growStage == 0) {
-                    targetTilemap.SetTile(cropTile.position, plowed);
-                }
-
-                cropTile.growStage += 1;
+            else if (itemSlot.item.Name == "potato") {
+                potato = itemSlot.item;
             }
-
+            else if (itemSlot.item.Name == "strawberry") {
+                strawberry = itemSlot.item;
+            }
+            else if (itemSlot.item.Name == "tomato") {
+                tomato = itemSlot.item;
+            }
         }
+
+        fields = ToolsCharacterController.fields;
+
+        crops = new Dictionary<Vector3Int, Crop>();
+        corns = new Dictionary<Vector3Int, Crop>();
+        parsleys = new Dictionary<Vector3Int, Crop>();
+        potatoes = new Dictionary<Vector3Int, Crop>();
+        strawberries = new Dictionary<Vector3Int, Crop>();
+        tomatoes = new Dictionary<Vector3Int, Crop>();
+
+
+        toolbarController = GetComponent<ToolbarController>();
     }
 
-    public bool Check(Vector3Int position) {
-        return crops.ContainsKey((Vector2Int)position);
+    private void Update() {
+        foreach (var crop in crops.Values)
+            Grow(crop); 
+    }
+
+    public void Mow(Vector3Int position) {
+        groundTilemap.SetTile(position, mowed);
     }
 
     public void Plow(Vector3Int position) {
-        if (crops.ContainsKey((Vector2Int)position)) {
-            return;
-        }
-
-        CreatePlowedTile(position);
+        groundTilemap.SetTile(position, plowed);
     }
 
-    public void Seed(Vector3Int position, Crop toSeed) {
-        targetTilemap.SetTile(position, seeded);
+    public void SeedCrop(Vector3Int position, string name) {
+        Crop cropSeeded;
+        if (name == "corn") {
+            cropSeeded = Instantiate(corn);
+            cropSeeded.position = position;
+            cropSeeded.state = cropSeeded.state0;
+            cropSeeded.timeRemaining = 120;
 
-        crops[(Vector2Int)position].crop = toSeed;  
+            crops.Add(position, cropSeeded);
+            corns.Add(position, cropSeeded);
+            cropTilemap.SetTile(cropSeeded.position, cropSeeded.state0);
+        }
+        else if (name == "parsley") {
+            cropSeeded = Instantiate(parsley);
+            cropSeeded.position = position;
+            cropSeeded.state = cropSeeded.state0;
+            cropSeeded.timeRemaining = 60;
+
+            crops.Add(position, cropSeeded);
+            parsleys.Add(position, cropSeeded);
+            cropTilemap.SetTile(cropSeeded.position, cropSeeded.state0);
+        }
+        else if (name == "potato") {
+            cropSeeded = Instantiate(potato);
+            cropSeeded.position = position;
+            cropSeeded.state = cropSeeded.state0;
+            cropSeeded.timeRemaining = 90;
+
+            crops.Add(position, cropSeeded);
+            potatoes.Add(position, cropSeeded);
+            cropTilemap.SetTile(cropSeeded.position, cropSeeded.state0);
+        }
+        else if (name == "strawberry") {
+            cropSeeded = Instantiate(strawberry);
+            cropSeeded.position = position;
+            cropSeeded.state = cropSeeded.state0;
+            cropSeeded.timeRemaining = 90;
+
+            crops.Add(position, cropSeeded);
+            strawberries.Add(position, cropSeeded);
+            cropTilemap.SetTile(cropSeeded.position, cropSeeded.state0);
+        }
+        else if (name == "tomato") {
+            cropSeeded = Instantiate(tomato);
+            cropSeeded.position = position;
+            cropSeeded.state = cropSeeded.state0;
+            cropSeeded.timeRemaining = 60;
+
+            crops.Add(position, cropSeeded);
+            tomatoes.Add(position, cropSeeded);
+            cropTilemap.SetTile(cropSeeded.position, cropSeeded.state0);
+        }
+        groundTilemap.SetTile(position, toWater);
     }
 
-    private void CreatePlowedTile(Vector3Int position) {
-        CropTile crop = new CropTile();
-        crops.Add((Vector2Int)position, crop);
+    string DisplayTime(float timeToDisplay) {
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
 
-        GameObject go = Instantiate(cropsSpritePrefab);
-        go.transform.position = targetTilemap.CellToWorld(position);
-        go.transform.position -= Vector3.forward * 0.01f; 
-        go.SetActive(false);
-        crop.renderer =  go.GetComponent<SpriteRenderer>();
-
-        crop.position = position;
-
-        targetTilemap.SetTile(position, plowed);
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
-    internal void PickUp(Vector3Int gridPosition) {
-        Vector2Int position = (Vector2Int)gridPosition;
-        if (crops.ContainsKey(position) == false) {
-            return;
+    public void Water(Vector3Int position) {
+        crops[position].timerIsRunning = true; 
+        groundTilemap.SetTile(position, watered);
+
+    }
+
+    void Grow(Crop crop) {
+        if (crop.timerIsRunning) {
+            if (crop.timeRemaining > 0)
+            {
+                crop.timeRemaining -= Time.deltaTime;
+            }
+            else {
+                if (crop.name == "Parsley(Clone)") {
+                    if (crop.state == crop.state0)
+                        crop.state = crop.state1;
+                    else if (crop.state == crop.state1)
+                        crop.state = crop.state2;
+                    else if (crop.state == crop.state2)
+                        crop.state = crop.state3;
+                    else if (crop.state == crop.state3)
+                        crop.state = crop.state4;
+
+                    cropTilemap.SetTile(crop.position, crop.state);
+                    groundTilemap.SetTile(crop.position, toWater);
+
+
+                    crop.timerIsRunning = false;
+                    if (crop.state != crop.state4)
+                    {
+                        crop.timeRemaining = 60;
+                    }
+                }
+                else {
+                    if (crop.state == crop.state0)
+                        crop.state = crop.state1;
+                    else if (crop.state == crop.state1)
+                        crop.state = crop.state2;
+                    else if (crop.state == crop.state2)
+                        crop.state = crop.state3;
+                    else if (crop.state == crop.state3)
+                        crop.state = crop.state4;
+                    else if (crop.state == crop.state4)
+                        crop.state = crop.state5;
+
+                    cropTilemap.SetTile(crop.position, crop.state);
+                    groundTilemap.SetTile(crop.position, toWater);
+
+                    crop.timerIsRunning = false;
+                    if (crop.state != crop.state5)
+                    {
+                        if (crop.name == "Corn(Clone)")
+                            crop.timeRemaining = 120;
+                        if (crop.name == "Potato(Clone)")
+                            crop.timeRemaining = 90;
+                        if (crop.name == "Strawberry(Clone)")
+                            crop.timeRemaining = 90;
+                        if (crop.name == "Tomato(Clone)")
+                            crop.timeRemaining = 60;
+                    }
+                }
+
+            }
         }
+    }
 
-        CropTile cropTile = crops[position];
-
-        if (cropTile.Complete) {
-            ItemSpawnManager.instance.SpawnItem(
-                targetTilemap.CellToWorld(gridPosition),
-                cropTile.crop.yield,
-                cropTile.crop.count
-                );
-
-            targetTilemap.SetTile(gridPosition, plowed);
-            cropTile.Harvest();
+    public void Collect(Vector3Int position, string name) {
+        if (name == "corn") {
+            cropTilemap.SetTile(position, invisible); 
+            Destroy(corns[position]);
+            corns.Remove(position);
         }
+        else if (name == "parsley") {
+            cropTilemap.SetTile(position, invisible);
+            Destroy(parsleys[position]);
+            parsleys.Remove(position);
+        }
+        else if (name == "potato") {
+            cropTilemap.SetTile(position, invisible);
+            Destroy(potatoes[position]);
+            potatoes.Remove(position);
+        }
+        else if (name == "strawberry") {
+            cropTilemap.SetTile(position, invisible);
+            Destroy(strawberries[position]);
+            strawberries.Remove(position);
+        }
+        else if (name == "tomato") {
+            cropTilemap.SetTile(position, invisible);
+            Destroy(tomatoes[position]);
+            tomatoes.Remove(position);
+        }
+        crops.Remove(position);
+        MoneyController.money += 20;
+
+        int texture = UnityEngine.Random.Range(0, 2);
+        if (texture == 0)
+            groundTilemap.SetTile(position, mowed);
+        else
+            groundTilemap.SetTile(position, grass);
+
     }
 }
