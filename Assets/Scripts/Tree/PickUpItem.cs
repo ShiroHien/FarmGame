@@ -7,6 +7,7 @@ public class PickUpItem : MonoBehaviour
     Transform player;
     [SerializeField] float speed = 5f;
     [SerializeField] float pickUpDistance = 1.5f;
+    [SerializeField] Item item;
     public int count = 1;
     GameObject toolbar;
 

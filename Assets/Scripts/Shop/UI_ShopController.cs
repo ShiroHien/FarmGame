@@ -123,8 +123,6 @@ public class UI_ShopController : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    //dodać obsługę kliknięcia i zakup przedmiotu
-
     private void Update()
     {
         inventoryPanel.SetActive(false);
