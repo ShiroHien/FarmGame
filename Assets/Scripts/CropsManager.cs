@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class CropTile {
     public int growTimer;
     public int growStage;
     public Crop crop;
     public SpriteRenderer renderer;
+    public float wither;
+    public Vector3Int position;
 
     public bool Complete {
         get {
@@ -22,6 +25,7 @@ public class CropTile {
         growStage = 0;
         crop = null;
         renderer.gameObject.SetActive(false);
+        wither = 0;
     }
 }
 
@@ -44,6 +48,14 @@ public class CropsManager : TimeAgent
         foreach (CropTile cropTile in crops.Values) {
             if (cropTile == null) { continue; }
 
+            cropTile.wither += 0.02f;
+
+            if (cropTile.wither > 1f) {
+                cropTile.Harvest();
+                targetTilemap.SetTile(cropTile.position, plowed);
+                continue;
+            }
+
             if (cropTile.Complete) {
                 Debug.Log("done growing");
                 continue;
@@ -55,6 +67,10 @@ public class CropsManager : TimeAgent
 
                 cropTile.renderer.gameObject.SetActive(true);
                 cropTile.renderer.sprite = cropTile.crop.sprites[cropTile.growStage];
+
+                if (cropTile.growStage == 0) {
+                    targetTilemap.SetTile(cropTile.position, plowed);
+                }
 
                 cropTile.growStage += 1;
             }
@@ -90,6 +106,8 @@ public class CropsManager : TimeAgent
         go.SetActive(false);
         crop.renderer =  go.GetComponent<SpriteRenderer>();
 
+        crop.position = position;
+
         targetTilemap.SetTile(position, plowed);
     }
 
@@ -107,6 +125,8 @@ public class CropsManager : TimeAgent
                 cropTile.crop.yield,
                 cropTile.crop.count
                 );
+
+            targetTilemap.SetTile(gridPosition, plowed);
             cropTile.Harvest();
         }
     }
