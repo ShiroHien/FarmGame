@@ -98,7 +98,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 7548bb8b37b15ae4cb286bc7da17613b, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 7548bb8b37b15ae4cb286bc7da17613b,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -250,8 +251,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 69730707}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ClickAbout
         m_Mode: 1
         m_Arguments:
@@ -462,8 +463,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 69730707}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: ClickControls
         m_Mode: 1
         m_Arguments:
@@ -755,7 +756,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1352955200029874055, guid: 5e600f920a0664149b03b6c074709e66, type: 3}
+  m_Sprite: {fileID: 1352955200029874055, guid: 5e600f920a0664149b03b6c074709e66,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -880,10 +882,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2082020200}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 377.2889, y: -223.635}
+  m_SizeDelta: {x: 754.5778, y: 447.27}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &452658316
 MonoBehaviour:
@@ -1349,7 +1351,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3771794143540122796, guid: 5e600f920a0664149b03b6c074709e66, type: 3}
+  m_Sprite: {fileID: 3771794143540122796, guid: 5e600f920a0664149b03b6c074709e66,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1424,7 +1427,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8766740682603709380, guid: 0e9170b4374bf5044a6feca0ccbcd55a, type: 3}
+  m_Sprite: {fileID: 8766740682603709380, guid: 0e9170b4374bf5044a6feca0ccbcd55a,
+    type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1499,7 +1503,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6525596163956550304, guid: d6f51486401aa454aa15a188bf25a3b2, type: 3}
+  m_Sprite: {fileID: 6525596163956550304, guid: d6f51486401aa454aa15a188bf25a3b2,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1873,7 +1878,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8635903978712429406, guid: 5e600f920a0664149b03b6c074709e66, type: 3}
+  m_Sprite: {fileID: 8635903978712429406, guid: 5e600f920a0664149b03b6c074709e66,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1974,8 +1980,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+      - m_Target: {fileID: 69730707}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: LoadMenu
         m_Mode: 1
         m_Arguments:
@@ -2321,7 +2327,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5672623778664467425, guid: 5e600f920a0664149b03b6c074709e66, type: 3}
+  m_Sprite: {fileID: -5672623778664467425, guid: 5e600f920a0664149b03b6c074709e66,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2459,10 +2466,10 @@ RectTransform:
   - {fileID: 1187137601}
   m_Father: {fileID: 1717537940}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 377.28894, y: -461.1}
+  m_SizeDelta: {x: 754.5779, y: 922.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1755202606
 MonoBehaviour:

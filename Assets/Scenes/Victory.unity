@@ -98,7 +98,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 6daf71588477481408fa473aeb782753, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 6daf71588477481408fa473aeb782753,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -482,7 +483,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -9176958518554377741, guid: b7e1403521ea6524baf228a5eb0c3b50, type: 3}
+  m_Sprite: {fileID: -9176958518554377741, guid: b7e1403521ea6524baf228a5eb0c3b50,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -834,12 +836,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: A rescue helicopter has come for you! During your stay on the island, you
-    were always very polite to the parrot during your business. Even though she cannot
-    speak human speech herself, she wanted to help you and told the other parrots
-    about you. It turned out that one of them was the pet of a certain well-known
-    pilot, and she gave him information about a lonely survivor in human speech,
-    and he immediately rushed to get you!
+  m_Text: "You have been rescued! \nCongratulation on being alive!"
 --- !u!222 &1154209723
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1323,7 +1320,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -9176958518554377741, guid: b7e1403521ea6524baf228a5eb0c3b50, type: 3}
+  m_Sprite: {fileID: -9176958518554377741, guid: b7e1403521ea6524baf228a5eb0c3b50,
+    type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
